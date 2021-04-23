@@ -1,0 +1,19 @@
+ratings:
+  namespace: student122-bookinfo-uat
+  image: ghcr.io/rocketc/bookinfo-ratings
+  tag: uat
+  replicas: 1
+  imagePullSecrets: registry-bookinfo
+  port: 8080
+  healthCheckPath: "/health"
+  mongodbPasswordExistingSecret: bookinfo-uat-ratings-mongodb-secret
+ingress:
+  host: bookinfo.uat.opsta.net
+  path: "/student122/ratings(/|$)(.*)"
+  serviceType: ClusterIP
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+extraEnv:
+  SERVICE_VERSION: v2
+  MONGO_DB_URL: mongodb://bookinfo-uat-ratings-mongodb:27017/ratings
