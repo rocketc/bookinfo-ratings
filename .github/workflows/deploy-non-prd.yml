@@ -20,7 +20,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/[USERNAME]/bookinfo-ratings:${{ env.ENV_NAME }}
+          tags: ghcr.io/rocketc/bookinfo-ratings:${{ env.ENV_NAME }}
   deploy:
     needs: build
     runs-on: ubuntu-20.04
@@ -38,7 +38,7 @@ jobs:
         with:
           helm: helm3
           release: bookinfo-${{ env.ENV_NAME }}-ratings
-          namespace: student[X]-bookinfo-${{ env.ENV_NAME }}
+          namespace: student122-bookinfo-${{ env.ENV_NAME }}
           chart: k8s/helm
           value-files: k8s/helm-values/values-bookinfo-${{ env.ENV_NAME }}-ratings.yaml
           values: |
@@ -52,4 +52,4 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Acceptance Test
-        run: curl http://bookinfo.${{ env.ENV_NAME }}.opsta.net/student[X]/ratings/health | grep "Ratings is working"
+        run: curl http://bookinfo.${{ env.ENV_NAME }}.opsta.net/student122/ratings/health | grep "Ratings is working"
